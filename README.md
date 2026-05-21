@@ -1,69 +1,79 @@
 # Laboratorio Bloque 4 - Parque Turistico de Dinosaurios
 
-## Descripcion general
+## Descripcion
 
-Este proyecto corresponde al laboratorio del Bloque 4 del programa de capacitacion Java.
+Este proyecto es parte del laboratorio del Bloque 4 de la capacitacion de Java.
 
-El sistema simula la operacion basica de un parque turistico de dinosaurios. Durante la simulacion se administran turistas, dinosaurios, trabajadores, zonas del parque, eventos aleatorios, ingresos, gastos y monitoreo general.
+La idea del proyecto fue hacer una simulacion sencilla de un parque turistico de dinosaurios. En la simulacion se manejan turistas, dinosaurios, trabajadores, zonas del parque, eventos, ingresos, gastos y un monitoreo basico en consola.
 
-El objetivo principal es aplicar los temas vistos durante la formacion, como Java, Programacion Orientada a Objetos, Maven, pruebas unitarias, patrones de diseno, persistencia basica y buenas practicas de codigo.
+El proyecto fue desarrollado como practica para aplicar varios temas vistos en clase, principalmente:
 
-## Tecnologias utilizadas
+- Java
+- Programacion orientada a objetos
+- Maven
+- Git y GitHub
+- Pruebas unitarias
+- Patrones de diseno
+- Persistencia basica
+- Buenas practicas de codigo
+
+No es un sistema real de produccion, sino una simulacion hecha para practicar los conceptos del modulo.
+
+## Herramientas utilizadas
+
+Para desarrollar el proyecto utilice:
 
 - Java 17
-- Maven 3.9.14
-- JUnit 5
-- Mockito
-- JaCoCo
+- Maven
 - Git
 - GitHub
 - Visual Studio Code
+- JUnit 5
+- JaCoCo
 
-## Requisitos previos
+Versiones usadas en mi equipo:
 
-Para ejecutar el proyecto se requiere tener instalado:
-
-```bash
-java -version
-mvn -version
-git --version
-
-Versiones usadas durante el desarrollo:
-
+```text
 Java 17.0.12
 Apache Maven 3.9.14
 Git 2.54.0.windows.1
 VS Code 1.120.0
+```
 
+## Como ejecutar el proyecto
 
+Primero se debe clonar el repositorio y entrar a la carpeta del proyecto.
 
-Estructura del proyecto
+Para compilar el proyecto:
 
-src
-├── main
-│   ├── java
-│   │   └── com.axity.dinosaurpark
-│   │       ├── config
-│   │       ├── event
-│   │       ├── model
-│   │       ├── monitoring
-│   │       ├── persistence
-│   │       ├── simulation
-│   │       └── zone
-│   └── resources
-│       └── park.properties
-└── test
-    └── java
-        └── com.axity.dinosaurpark
+```bash
+mvn compile
+```
 
- La configuracion principal se encuentra en:
+Para ejecutar la simulacion:
 
- src/main/resources/park.properties
+```bash
+mvn exec:java
+```
 
+Para ejecutar las pruebas unitarias:
 
- Ejemplo de parametros configurables:
+```bash
+mvn test
+```
 
- simulation.seed=42
+## Configuracion
+
+La configuracion principal del proyecto se encuentra en el archivo:
+
+```text
+src/main/resources/park.properties
+```
+
+En este archivo se pueden cambiar algunos valores de la simulacion, por ejemplo:
+
+```properties
+simulation.seed=42
 simulation.totalSteps=100
 simulation.arrivalBatchSize=5
 
@@ -73,178 +83,176 @@ dinosaurs.herbivores=15
 
 workers.guards=3
 workers.technicians=2
-workers.dailySalary=150.0       
+workers.dailySalary=150.0
+```
 
-La semilla simulation.seed permite que la simulacion sea determinista. Esto significa que, usando la misma configuracion, los eventos se programan de forma repetible.
+La semilla `simulation.seed` sirve para que los eventos se puedan repetir de forma similar cada vez que se ejecuta el programa.
 
-Ejecucion del proyecto
+## Estructura general
 
-Para compilar:
+El proyecto esta separado en varios paquetes para mantener un poco mas ordenado el codigo:
 
-mvn compile
+```text
+src/main/java/com/axity/dinosaurpark
+```
 
-Para ejecutar la simulacion:
+Paquetes principales:
 
-mvn exec:java
+- `config`: carga la configuracion del archivo `park.properties`.
+- `model`: contiene las clases principales como turistas, dinosaurios y trabajadores.
+- `zone`: contiene las zonas del parque.
+- `event`: contiene los eventos de la simulacion.
+- `simulation`: contiene el motor principal de la simulacion.
+- `persistence`: contiene la escritura de archivos CSV.
+- `monitoring`: muestra informacion del parque en consola.
 
-Al ejecutar el sistema se muestra en consola el monitoreo del parque por cada paso de simulacion.
+Las pruebas estan en:
 
+```text
+src/test/java/com/axity/dinosaurpark
+```
 
-Archivos generados
+## Funcionamiento general
 
-La simulacion genera archivos CSV en la carpeta:
+De forma resumida, la simulacion hace lo siguiente:
 
+1. Carga la configuracion del parque.
+2. Crea turistas, dinosaurios, trabajadores y zonas.
+3. Los turistas entran al parque por la zona de arribo.
+4. Se registran ingresos por boletos y visitas.
+5. Los turistas visitan zonas como el recinto central, banos y recintos de observacion.
+6. Se generan algunos eventos como tormentas, apagones o escapes de dinosaurios.
+7. Los trabajadores ayudan a controlar problemas del parque.
+8. Se muestra un monitoreo en consola.
+9. Se generan archivos CSV con ingresos, gastos y eventos.
+
+## Archivos generados
+
+Cuando se ejecuta la simulacion, se crea la carpeta:
+
+```text
 output/
+```
 
-Archivos generados:
+Dentro se generan estos archivos:
 
+```text
 revenues.csv
 expenses.csv
 events.csv
+```
 
-Estos archivos registran:
+Estos archivos guardan informacion de:
 
-Ingresos por boletos, souvenirs, SPA y recintos.
-Gastos por salarios, mantenimiento, reparaciones y eventos.
-Eventos ocurridos durante la simulacion.
+- Ingresos del parque.
+- Gastos del parque.
+- Eventos ocurridos durante la simulacion.
 
-La carpeta output/ no se sube al repositorio porque contiene archivos generados en tiempo de ejecucion.
+La carpeta `output/` no se sube al repositorio porque son archivos generados al ejecutar el programa.
 
+## Pruebas unitarias
 
-Pruebas unitarias
+El proyecto tiene pruebas unitarias con JUnit.
 
-Para ejecutar las pruebas:
+Se probaron clases como:
 
+- `Tourist`
+- `Dinosaur`
+- `PowerPlant`
+- Zonas del parque
+- Eventos
+- Persistencia CSV
+- Estado de la simulacion
+
+El comando para ejecutar pruebas es:
+
+```bash
 mvn test
+```
 
-El proyecto incluye pruebas unitarias para:
+Resultado obtenido:
 
-Turistas
-Dinosaurios
-Planta de energia
-Zonas del parque
-Eventos
-Persistencia CSV
-Estado de simulacion
-Trabajadores
-Registros auxiliares
-
-Resultado esperado:
-
+```text
 Tests run: 30, Failures: 0, Errors: 0, Skipped: 0
 BUILD SUCCESS
+```
 
-Cobertura de pruebas
+Tambien se usa JaCoCo para revisar la cobertura del codigo. La cobertura minima configurada es de 45%, y el proyecto ya cumple con esa validacion.
 
-El proyecto utiliza JaCoCo para validar cobertura de codigo.
+## Patrones de diseno usados
 
-La cobertura minima configurada es: 45%
+### Singleton
 
-El comando mvn test valida automaticamente que se cumpla este porcentaje.
+Use el patron Singleton en la clase:
 
-Patrones de diseno aplicados
-Singleton
-
-Se aplica en la clase:
-
+```text
 ParkConfig
+```
 
-Esta clase centraliza la lectura del archivo park.properties y evita crear multiples instancias de configuracion durante la ejecucion.
+Esta clase se encarga de cargar la configuracion del archivo `park.properties`. Lo hice asi para tener una sola instancia de configuracion durante la ejecucion.
 
-Strategy
+### Strategy
 
-Se aplica mediante la interfaz:
+Use el patron Strategy en los eventos de simulacion.
 
+La interfaz principal es:
+
+```text
 SimulationEvent
+```
 
-Y sus implementaciones:
+Y algunas implementaciones son:
 
+```text
 DinosaurEscapeEvent
 BlackoutEvent
 StormEvent
+```
 
-Cada evento tiene una forma distinta de ejecutarse, pero todos pueden ser tratados de manera uniforme por el motor de simulacion.
+La idea es que todos los eventos se puedan ejecutar de forma parecida, aunque cada uno tenga una logica diferente.
 
-Componentes principales
-Modelos
+## Clases principales
 
-Representan las entidades principales del parque:
+Algunas clases importantes del proyecto son:
 
-Tourist
-Dinosaur
-CarnivoreDinosaur
-HerbivoreDinosaur
-Worker
-Guard
-Technician
-Ticket
-SatisfactionSurvey
-Zonas
+- `Main`: punto de entrada del programa.
+- `SimulationEngine`: controla la simulacion principal.
+- `ParkConfig`: carga configuracion.
+- `ParkMonitor`: muestra el estado del parque.
+- `CsvWriter`: escribe los archivos CSV.
+- `Tourist`: representa un turista.
+- `Dinosaur`: clase base para dinosaurios.
+- `Guard` y `Technician`: trabajadores del parque.
+- `PowerPlant`: representa la planta de energia.
 
-Representan espacios dentro del parque:
+## Buenas practicas aplicadas
 
-ArrivalZone
-CentralHub
-BathroomZone
-ObservationEnclosure
-PowerPlant
-Simulacion
+Durante el desarrollo intente aplicar buenas practicas vistas en clase, como:
 
-El flujo principal se coordina desde:
+- Separar el codigo por paquetes.
+- Usar nombres claros en clases y metodos.
+- Evitar clases demasiado grandes cuando fue posible.
+- Usar encapsulamiento con atributos privados.
+- Usar enums para algunos estados.
+- Agregar validaciones basicas.
+- Agregar comentarios en partes importantes.
+- Crear pruebas unitarias.
+- Hacer commits pequenos y descriptivos.
 
-SimulationEngine
+Todavia hay cosas que se podrian mejorar, pero el proyecto cumple con el objetivo del laboratorio y me ayudo a practicar los temas vistos.
 
-Este componente crea las entidades, procesa llegadas, mueve turistas por zonas, ejecuta eventos, registra gastos e ingresos, y muestra el monitoreo del parque.
+## Repositorio
 
-Monitoreo
+Repositorio publico del proyecto:
 
-La clase:
-
-ParkMonitor
-
-muestra en consola informacion como:
-
-Paso actual
-Turistas activos
-Dinosaurios en recintos
-Energia disponible
-Estado de la planta
-Ingresos acumulados
-Gastos acumulados
-Buenas practicas aplicadas
-
-Durante el desarrollo se procuro aplicar buenas practicas vistas en el modulo de calidad de codigo:
-
-Nombres claros en clases, metodos y variables.
-Clases con responsabilidades separadas.
-Encapsulamiento de atributos.
-Uso de enums para evitar valores de texto libres.
-Validaciones basicas en constructores.
-Separacion entre modelo, simulacion, persistencia, eventos y monitoreo.
-Uso de pruebas unitarias.
-Uso de .gitignore para evitar subir archivos generados.
-Commits pequenos y descriptivos.
-Flujo general de la simulacion
-Se carga la configuracion desde park.properties.
-Se crean turistas, dinosaurios, trabajadores y zonas.
-Los turistas entran por la zona de arribo.
-Se registra venta de boletos.
-Los turistas visitan recinto central, banos y recintos de observacion.
-Se generan ingresos y gastos.
-Se ejecutan eventos programados de forma determinista.
-Los trabajadores atienden problemas del parque.
-Se muestra monitoreo por consola.
-Se generan archivos CSV al finalizar.
-Repositorio
-
-Repositorio publico utilizado para la validacion del laboratorio:
-
+```text
 https://github.com/hugoadsanchez/a28hugosanchez
-Autor
+```
 
-Hugo Adrian Sanchez Ruiz
+## Autor
+
+Hugo Adrian Sanchez Ruiz  
 Lista: A28
-
 
 
 
